@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.forms import Form
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from task_manager.users.forms import UserCreateForm
@@ -23,11 +24,14 @@ class UsersIndexView(UsersAbstractMixin, IndexViewMixin):
     context_object_name = 'users'
 
 
-class UserCreateView(UsersAbstractMixin, CreateViewMixin):
-    success_url = reverse_lazy('login')
-    template_name = 'users/create.html'
-    success_message = _('User has been registered successfully.')
+# class UserCreateView(UsersAbstractMixin, CreateViewMixin):
+#     success_url = reverse_lazy('login')
+#     template_name = 'users/create.html'
+#     success_message = _('User has been registered successfully.')
 
+def register_user(request):
+    form = UserCreateForm()
+    return render(request, 'users/create.html', {'form': form})
 
 class UserUpdateView(UserCreatorOnlyMixin, UsersAbstractMixin,
                      UpdateViewMixin):
