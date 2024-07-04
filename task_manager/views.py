@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.messages.views import SuccessMessageMixin
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import TemplateView
@@ -12,18 +13,22 @@ class IndexView(TemplateView):
     template_name = 'index.html'
 
 
-class TaskManagerLoginView(SuccessMessageMixin, LoginView):
-    template_name = 'login.html'
-    success_message = _('You are logged in.')
+# class TaskManagerLoginView(SuccessMessageMixin, LoginView):
+#     template_name = 'login.html'
+#     success_message = _('You are logged in.')
 
+def login_user(request):
+    return HttpResponse("login")
 
-class TaskManagerLogoutView(View):
+# class TaskManagerLogoutView(View):
+#
+#     def post(self, request, *args, **kwargs):
+#         logout(request)
+#         messages.info(request, _('You are logged out'))
+#         return redirect('index')
 
-    def post(self, request, *args, **kwargs):
-        logout(request)
-        messages.info(request, _('You are logged out'))
-        return redirect('index')
-
+def logout_user(request):
+    return HttpResponse("logout")
 
 def page_not_found_view(request, *args, **kwargs):
     return render(request, '404.html', status=404)
